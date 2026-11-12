@@ -1,0 +1,27 @@
+name: Validate project metadata
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  metadata:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Validate required project files
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s README.md
+          test -s device/d2xks/device.yaml
+          test -s docs/DEVICE_SUPPORT.md
+          test -s docs/INSTALLATION.md
+          grep -q 'model: SM-N976N' device/d2xks/device.yaml
+          grep -q 'flashable_artifacts_available: false' device/d2xks/device.yaml
+          echo "Project metadata checks passed."

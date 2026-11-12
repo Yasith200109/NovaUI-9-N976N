@@ -1,0 +1,16 @@
+project: NovaUI 9
+manufacturer: Samsung
+marketing_name: Galaxy Note10+ 5G
+model: SM-N976N
+soc: Exynos 9825
+codename: d2xks
+codename_status: needs_upstream_verification
+support_status: planning_only
+android_base: unknown
+firmware_build: unknown
+bootloader_revision: unknown
+flashable_artifacts_available: false
+notes:
+  - Verify all identifiers on the physical target before development.
+  - Related Note10 variants are not assumed compatible.
+  - No proprietary firmware or vendor payloads belong in this repository.

@@ -1,0 +1,20 @@
+# Build outputs and local secrets
+out/
+.cache/
+ccache/
+dist/
+*.img
+*.img.lz4
+*.tar
+*.tar.md5
+*.zip
+*.7z
+*.key
+*.pem
+*.p12
+*.jks
+.env
+.env.*
+*.log
+.DS_Store
+Thumbs.db
