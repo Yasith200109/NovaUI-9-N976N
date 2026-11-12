@@ -4,13 +4,23 @@ marketing_name: Galaxy Note10+ 5G
 model: SM-N976N
 soc: Exynos 9825
 codename: d2xks
-codename_status: needs_upstream_verification
-support_status: planning_only
+codename_status: upstream_references_found_physical_device_confirmation_pending
+support_status: planning_source_audit
 android_base: unknown
 firmware_build: unknown
 bootloader_revision: unknown
 flashable_artifacts_available: false
+candidate_rom_source:
+  repository: Ocin4ever/EternityROM
+  branch: fifteen
+  status: research_only
+candidate_kernel_source:
+  repository: ExtremeXT/android_kernel_samsung_exynos9820
+  defconfig: extreme_d2xks_defconfig
+  status: research_only
 notes:
-  - Verify all identifiers on the physical target before development.
+  - Verify model, firmware, baseband, CSC and bootloader revision on the physical target.
   - Related Note10 variants are not assumed compatible.
+  - Candidate sources are not yet adopted or pinned to reproducible commits.
   - No proprietary firmware or vendor payloads belong in this repository.
+  - No flashable artifacts have been built or validated.
