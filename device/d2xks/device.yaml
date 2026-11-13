@@ -16,12 +16,12 @@ bootloader_binary: "2"
 csc_active: KOO
 csc_multi: "KOO/KOO/KOO/KTC"
 google_play_system_update: "2026-09-01"
-security_patch_level: user_not_provided
+security_patch_level: "2023-08-01"
 firmware_snapshot_notes:
   - Build number identifies N976NKSU2HXJ2; public firmware catalogs associate this with SM-N976N, Android 12, One UI 4.1, binary 2, built 2025-02-03/04.
-  - Reported baseband N976NKOU2HWH3 differs from the AP/build suffix HXJ2; verify CP version directly in Download Mode or a complete firmware record before selecting modem/vendor dependencies.
+  - Android getprop output confirms bootloader string N976NKSU2HXJ2, baseband N976NKOU2HWH3, active CSC KOO, and Android security patch level 2023-08-01. The AP/build and CP/baseband suffixes differ; this is recorded as an unresolved firmware pairing, not assumed to be an error. Verify against a complete official firmware package before selecting modem/vendor dependencies.
   - Google Play system update date is not the Android security patch level.
-  - Confirm bootloader revision and exact active CSC from Download Mode/Service provider software details before any flashing.
+  - Device identity, bootloader string, security patch level, baseband and active CSC were read from Android properties; Download Mode-only state (including current binary/rollback state and secure download flags) remains unverified.
 candidate_rom_source:
   repository: Ocin4ever/EternityROM
   branch: fifteen
