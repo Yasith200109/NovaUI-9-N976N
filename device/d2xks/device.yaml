@@ -36,8 +36,19 @@ firmware_snapshot_notes:
   - Bootloader binary 2 is inferred from the AP string; Download Mode rollback state is not independently verified.
 rom_target_notes:
   - One UI 9 / Android 17 is the selected custom-port target, not an official update for SM-N976N.
-  - A compatible donor firmware build has not yet been selected or pinned.
-  - The installed Android 12 vendor baseline is substantially older than the target; vendor, framework, kernel, and partition compatibility require explicit engineering validation.
+  - A compatible donor firmware build has not yet been selected.
+  - SM-S942N / S942NKSS6BZK1 (KOO) is an inspection candidate for One UI 9 system/framework research only; its platform, vendor, kernel and partition assumptions are not compatible by assumption.
+  - The installed Android 12 vendor baseline is substantially older than the donor candidate's Android 16 vendor base; compatibility requires explicit engineering validation.
+donor_candidate:
+  model: SM-S942N
+  device: Galaxy S26 (Korean)
+  csc: KOO
+  firmware_build: S942NKSS6BZK1
+  android_version: 17
+  one_ui_version: "9"
+  security_patch: "2026-11-05"
+  status: inspection_candidate_only
+  source: https://doc.samsungmobile.com/SM-S942N/037049260309/kor.html
 candidate_rom_source:
   repository: Ocin4ever/EternityROM
   branch: fifteen
