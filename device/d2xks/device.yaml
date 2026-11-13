@@ -4,12 +4,24 @@ marketing_name: Galaxy Note10+ 5G
 model: SM-N976N
 soc: Exynos 9825
 codename: d2xks
-codename_status: upstream_references_found_physical_device_confirmation_pending
+codename_status: upstream_references_found_physical_device_confirmed_by_user_model_context
 support_status: planning_source_audit
-android_base: unknown
-firmware_build: unknown
-bootloader_revision: unknown
-flashable_artifacts_available: false
+android_base: Android 12
+one_ui_version: "4.1"
+build_number: SP1A.210812.016.N976NKSU2HXJ2
+baseband_version: N976NKOU2HWH3
+kernel_version: 4.14.113-27170661
+kernel_build_date: "2025-02-03"
+bootloader_binary: "2"
+csc_active: KOO
+csc_multi: "KOO/KOO/KOO/KTC"
+google_play_system_update: "2026-09-01"
+security_patch_level: user_not_provided
+firmware_snapshot_notes:
+  - Build number identifies N976NKSU2HXJ2; public firmware catalogs associate this with SM-N976N, Android 12, One UI 4.1, binary 2, built 2025-02-03/04.
+  - Reported baseband N976NKOU2HWH3 differs from the AP/build suffix HXJ2; verify CP version directly in Download Mode or a complete firmware record before selecting modem/vendor dependencies.
+  - Google Play system update date is not the Android security patch level.
+  - Confirm bootloader revision and exact active CSC from Download Mode/Service provider software details before any flashing.
 candidate_rom_source:
   repository: Ocin4ever/EternityROM
   branch: fifteen
@@ -18,9 +30,8 @@ candidate_kernel_source:
   repository: ExtremeXT/android_kernel_samsung_exynos9820
   defconfig: extreme_d2xks_defconfig
   status: research_only
+flashable_artifacts_available: false
 notes:
-  - Verify model, firmware, baseband, CSC and bootloader revision on the physical target.
-  - Related Note10 variants are not assumed compatible.
   - Candidate sources are not yet adopted or pinned to reproducible commits.
   - No proprietary firmware or vendor payloads belong in this repository.
   - No flashable artifacts have been built or validated.
