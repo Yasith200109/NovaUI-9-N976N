@@ -1,50 +1,62 @@
 # NovaUI 9 — Galaxy Note10+ 5G (SM-N976N)
 
-An independent development workspace for exploring a **One UI 9-inspired** Android experience for Samsung Galaxy Note10+ 5G (Exynos 9825; target codename commonly identified as `d2xks`).
+An independent Samsung One UI custom-ROM porting project for the exact target **Galaxy Note10+ 5G SM-N976N** (Exynos 9825, `d2xks`).
 
-> **Status: Planning / bring-up only. No installable ROM is available.**
+> **Status: source audit / port architecture. No installable ROM is available.**
 >
-> This project is independent and is not affiliated with or endorsed by Samsung. “One UI” is a Samsung trademark.
+> The selected product target is **One UI 9 / Android 17**. This is a custom porting objective, not an official Samsung update or a claim of device compatibility.
 
-## Goals
-- Prioritize stability and daily-use reliability.
-- Keep SM-N976N / `d2xks` distinct from related Note10-family variants.
-- Document source provenance, device requirements, limitations, and test results.
-- Automate safe source/configuration checks before full builds.
-- Respect upstream licenses and exclude proprietary Samsung payloads unless redistribution is explicitly permitted.
+## Locked project decisions
 
-## Target (to be verified)
-| Item | Target |
+| Decision | Selected value |
 |---|---|
 | Device | Samsung Galaxy Note10+ 5G |
-| Model | SM-N976N |
-| SoC | Exynos 9825 |
-| Device codename | `d2xks` (verify against selected device tree) |
-| Bootloader | User-reported unlocked; re-check before any operation |
-| Firmware base | Not yet confirmed |
+| Exact model | SM-N976N |
+| Codename / SoC | `d2xks` / Exynos 9825 |
+| ROM target | One UI 9 / Android 17 |
+| Build host | Cloud Linux server |
+| Memory target | 64 GB RAM |
+| Storage planning target | 1 TB NVMe |
+| CPU planning target | 16 or more vCPUs preferred; validate against chosen build system |
+| Stability goal | Daily-use reliability before feature count |
 
-Related models are not interchangeable. Never flash a package unless its maintainer explicitly confirms SM-N976N support.
+The cloud provider, region, instance type, and budget have **not** been selected. No server has been provisioned and no paid resource has been started.
 
-## Layout
-- `device/d2xks/` — target notes and conservative manifest.
-- `docs/` — support, build, installation, testing, and firmware policy.
-- `build/` — build environment planning.
-- `scripts/` — non-destructive validation helpers.
-- `.github/workflows/` — lightweight CI checks only.
+## Device baseline
 
-## Safety
-1. Do not upload stock firmware, proprietary vendor blobs, modem files, boot images, copyrighted apps, private keys, or personal data.
-2. Do not assume a `d2s`, `d2x`, or other variant build works on `d2xks`.
-3. Do not flash experimental builds on a primary device.
-4. Record source revision, firmware base, bootloader revision, and test results for every build.
-5. Keep EFS, IMEI, modem, bootloader, and partition-writing operations out of CI.
-6. Back up important data and establish a recovery plan before device testing.
+- Installed system: Android 12 / One UI 4.1
+- AP/build: `N976NKSU2HXJ2`
+- CP/baseband: `N976NKOU2HWH3`
+- Active CSC: `KOO`
+- Android security patch: `2023-08-01`
+- Bootloader: user-confirmed unlocked
+- Current recovery: stock Samsung Recovery
 
-## Next steps
-1. Confirm exact model, Android version, build number, baseband, and bootloader revision.
-2. Audit candidate device trees, kernels, ROM base, and licenses.
-3. Establish a reproducible `d2xks` bring-up path.
-4. Add hardware support only after verification on the exact target.
-5. Test incrementally before considering daily-use status.
+The AP and CP identifiers differ. This remains an unresolved firmware-pairing item; do not select modem, vendor, boot, or recovery dependencies until the complete official firmware package is verified.
 
-See [device support](docs/DEVICE_SUPPORT.md), [build guide](docs/BUILD_GUIDE.md), [installation policy](docs/INSTALLATION.md), [testing plan](docs/TESTING.md), and [firmware policy](docs/FIRMWARE_POLICY.md).
+## Porting approach
+
+1. Identify a legally usable One UI 9 / Android 17 donor firmware and pin its exact build.
+2. Audit the donor's Android version, security patch, partition layout, boot image format, vendor interface, and required firmware.
+3. Reuse only verified `d2xks` target-side configuration and kernel/device support; do not assume another Note10 variant is interchangeable.
+4. Build a non-flashing source validation pipeline first.
+5. Establish a verified recovery and rollback path before any handset test.
+
+The previously identified EternityROM `fifteen` branch is a One UI 7 reference, not a One UI 9 donor. It may inform build-system and target-configuration research only.
+
+## Repository layout
+
+- `device/d2xks/` — exact target manifest and device notes.
+- `docs/` — source audit, cloud build plan, safety, and test policy.
+- `build/` — non-destructive build configuration.
+- `scripts/` — validation helpers only.
+
+## Safety rules
+
+- Never cross-flash `d2s`, `d2x`, and `d2xks` by assumption.
+- Do not put stock firmware, proprietary vendor blobs, modem files, boot images, copyrighted apps, private keys, or personal data in this public repository.
+- Keep EFS, IMEI, modem, bootloader, and partition-writing operations out of CI.
+- Do not publish an artifact as installable until its exact target, source, packaging, hash, and recovery procedure are verified.
+- A successful compile is not proof of bootability; a successful boot is not proof of daily-use stability.
+
+See [device support](docs/DEVICE_SUPPORT.md), [source audit](docs/SOURCE_AUDIT.md), [build guide](docs/BUILD_GUIDE.md), [cloud host plan](docs/CLOUD_BUILD_HOST.md), [installation policy](docs/INSTALLATION.md), and [testing plan](docs/TESTING.md).
