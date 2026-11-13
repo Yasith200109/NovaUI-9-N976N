@@ -13,6 +13,7 @@ baseband_version: N976NKOU2HWH3
 kernel_version: 4.14.113-27170661
 kernel_build_date: "2025-02-03"
 bootloader_binary: "2"
+bootloader_status: unlocked_user_confirmed
 csc_active: KOO
 csc_multi: "KOO/KOO/KOO/KTC"
 google_play_system_update: "2026-09-01"
