@@ -2,9 +2,19 @@
 
 ## Product target
 
-Build an independent Samsung One UI-based custom ROM project for the exact target **Galaxy Note10+ 5G SM-N976N (Exynos 9825, d2xks)**. The desired UX target is One UI 9 / Android 17, but this is an exploratory port target, not a claim of official Samsung support or current compatibility.
+Build an independent Samsung One UI custom ROM port for the exact **Galaxy Note10+ 5G SM-N976N (Exynos 9825, d2xks)**. The selected target is **One UI 9 / Android 17**.
 
-Daily-use stability and preserving Samsung-specific hardware features take priority over visual version labels. No source or binary is considered compatible merely because it targets another Note10-family model.
+Daily-use stability and preserving Samsung-specific hardware features take priority over the version label. Samsung's official One UI 9 rollout does not list the Note10+ as an eligible model in the rollout information reviewed; this project is an independent port, not an official update.
+
+## Locked project decisions
+
+- Build host: cloud Linux server.
+- RAM target: 64 GB.
+- Storage planning target: 1 TB NVMe.
+- Preferred CPU planning target: 16+ vCPUs, subject to actual build requirements.
+- ROM target: One UI 9 / Android 17.
+- Cloud provider, instance, region, and budget: not selected.
+- No server provisioned; no paid resources started.
 
 ## Confirmed handset snapshot
 
@@ -12,69 +22,75 @@ Daily-use stability and preserving Samsung-specific hardware features take prior
 - Codename: d2xks
 - SoC: Exynos 9825
 - Installed system: Android 12 / One UI 4.1
-- Build/AP: N976NKSU2HXJ2
+- AP/build: N976NKSU2HXJ2
 - CP/baseband: N976NKOU2HWH3
 - Android security patch: 2023-08-01
 - Active CSC: KOO
 - Bootloader: user-confirmed unlocked
-- Recovery: stock Samsung recovery
-- Bootloader binary inferred from AP string: U2; Download Mode rollback state is not independently verified
+- Recovery: stock Samsung Recovery
+- Bootloader binary: U2 inferred from AP; Download Mode rollback state not independently verified
 
-The AP and CP strings differ. This is recorded as an unresolved firmware pairing. Do not select modem, vendor, boot or recovery dependencies until the exact stock firmware package and partition compatibility are verified.
+The AP and CP strings differ. Do not select modem, vendor, boot, or recovery dependencies until the complete official stock firmware package and partition contract are verified.
 
 ## Execution phases and exit criteria
 
-### Phase 0 — Safety and baseline (in progress)
-- Preserve the exact handset manifest and distinguish Android security patch from Google Play system update.
-- Capture non-sensitive build properties and source provenance.
-- Do not write to partitions or flash experimental images.
-- Exit: device identity and firmware baseline reviewed; unresolved items explicitly documented.
+### Phase 0 — Safety and baseline
+- Preserve the exact handset manifest.
+- Keep Android security patch separate from Google Play system update.
+- Verify the complete official firmware pairing and partition information using non-destructive inspection.
+- Exit: baseline reviewed and unresolved items documented.
 
-### Phase 1 — Upstream source audit (next)
-- Inspect the exact d2xks target configuration in the candidate Samsung UX ROM project.
-- Pin immutable commit IDs for ROM framework/build system, device configuration, kernel, recovery and required tools.
-- Inspect licenses, notices, source availability and redistribution restrictions before importing anything.
-- Verify build instructions, toolchain versions, required firmware, partition layout and image packaging.
-- Exit: a reproducible source bill of materials and a justified N976N bring-up architecture.
+### Phase 1 — One UI 9 donor and source audit (current)
+- Identify official One UI 9 / Android 17 donor firmware candidates.
+- Compare donor SoC/platform, vendor interface, partition layout, boot image format, and security patch with N976N.
+- Audit UN1CA-derived build frameworks and existing d2xks target configuration; EternityROM's current audited branch is a One UI 7 reference, not a One UI 9 donor.
+- Pin immutable source commits, submodules, licenses, and firmware provenance.
+- Exit: donor selected with a written compatibility rationale and source bill of materials.
 
-### Phase 2 — Build environment
-- Establish a Linux build host with the disk, RAM and CPU capacity required by the selected upstream build system.
-- Keep GitHub Actions limited to lint, metadata checks and lightweight tests unless a suitable dedicated runner is available.
-- Add reproducible setup scripts and capture build logs without secrets or proprietary payloads.
-- Exit: upstream baseline build can be reproduced before NovaUI-specific modifications.
+### Phase 2 — Cloud build environment
+- Provision a cloud Linux host only after provider, price, region and storage are approved.
+- Target 64 GB RAM and approximately 1 TB NVMe; prefer 16+ vCPUs, then tune based on real workload.
+- Build a reproducible environment and retain non-sensitive logs.
+- Exit: upstream tools and source checks run reproducibly on the host.
 
-### Phase 3 — Device bring-up
-- Integrate only verified d2xks-specific configuration and compatible kernel sources.
-- Keep stock firmware/vendor dependencies separate from redistributable source.
-- Add boot, recovery and SELinux configuration only after matching partition and firmware assumptions are confirmed.
-- Exit: first bootable engineering build with a documented known-issues list. No daily-use claim.
+### Phase 3 — Non-flashing baseline build
+- Download/extract donor firmware only into private storage.
+- Validate target assertions, partition metadata, file formats, patch application and packaging.
+- Keep all destructive flashing and partition writes disabled.
+- Exit: build pipeline produces an inspectable engineering artifact and complete checksum/log record; this is not yet permission to flash.
 
-### Phase 4 — Samsung feature integration
-Validate independently on the exact SM-N976N:
+### Phase 4 — Device bring-up
+- Integrate verified d2xks-specific configuration and compatible kernel support.
+- Establish a tested recovery/rollback route before any write operation.
+- Only then, with explicit user approval, test incrementally on the exact SM-N976N.
+- Exit: first bootable engineering build and documented known issues.
+
+### Phase 5 — Samsung feature integration
+Test independently on the exact handset:
 - boot, display, touch, sensors and charging
-- SIM detection, cellular data, voice calls, SMS and IMS/VoLTE where supported
+- SIM detection, mobile data, voice calls, SMS and IMS/VoLTE where supported
 - Wi-Fi, Bluetooth, NFC, GPS and USB
 - cameras, microphones, speakers and audio routing
 - fingerprint, face unlock if supported, S Pen/Air Command and pressure input
-- Samsung account/services, Secure Folder/Knox-dependent features, DeX and wearable integration where technically and legally possible
+- Samsung services, Knox-dependent features, Secure Folder, DeX and wearable integration where technically possible
 
-Do not promise that Knox-dependent features will work after bootloader unlock or custom software. Record failures honestly.
+Do not promise Knox-dependent features after bootloader unlock or custom software.
 
-### Phase 5 — Stability and release
-- Run repeated reboot, sleep/wake, charging, thermal, battery, radio and camera tests.
-- Verify OTA/update strategy, data migration behavior, encryption and recovery/rollback path.
-- Produce checksums, exact supported model/firmware requirements, installation instructions and known limitations.
-- Exit: release candidate passes the published test matrix on the exact target, with a verified recovery path and user consent for device testing.
+### Phase 6 — Stability and release
+- Repeated reboot, sleep/wake, charging, thermal, battery, radio and camera tests.
+- Verify encryption, data migration, update strategy, recovery and rollback.
+- Publish checksums, exact model/firmware requirements, installation instructions and known limitations.
+- Exit: release candidate passes the public test matrix on SM-N976N with a verified recovery path.
 
 ## Safety and release rules
 
-- No cross-flashing between d2s, d2x and d2xks without explicit verified support.
+- No cross-flashing d2s, d2x and d2xks by assumption.
 - No modem, EFS, IMEI, bootloader or partition-writing operations in CI.
 - Never commit proprietary Samsung firmware, vendor blobs, modem files, boot images, copyrighted apps, private keys, backups or personal data.
 - Do not publish an image as installable until its target, source revision, hash, packaging and recovery procedure are verified.
-- A build that compiles is not automatically bootable; a build that boots is not automatically daily-use stable.
-- Keep a clear distinction between planning, source-audited, buildable, boot-tested, feature-tested and release-ready states.
+- Compiling is not booting; booting is not daily-use stability.
+- Keep planning, source-audited, buildable, boot-tested, feature-tested and release-ready as separate statuses.
 
 ## Current status
 
-**Planning / source audit.** No NovaUI ROM image, custom recovery image, kernel package or flashable artifact has been built or validated. The One UI 9 / Android 17 target remains a research objective until upstream compatibility and required firmware dependencies are proven.
+**One UI 9 donor/source audit in progress.** No donor has been selected, no cloud host has been provisioned, and no NovaUI ROM/recovery/kernel artifact has been built or validated. No flashing is authorized.
