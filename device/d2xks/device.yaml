@@ -5,34 +5,49 @@ model: SM-N976N
 soc: Exynos 9825
 codename: d2xks
 codename_status: upstream_references_found_physical_device_confirmed_by_user_model_context
-support_status: planning_source_audit
-android_base: Android 12
-one_ui_version: "4.1"
+support_status: source_audit_port_architecture
+installed_android_base: 12
+installed_one_ui_version: "4.1"
+target_android_version: 17
+target_one_ui_version: "9"
 build_number: SP1A.210812.016.N976NKSU2HXJ2
 baseband_version: N976NKOU2HWH3
 kernel_version: 4.14.113-27170661
 kernel_build_date: "2025-02-03"
 bootloader_binary: "2"
 bootloader_status: unlocked_user_confirmed
+recovery_status: stock_samsung_recovery
 csc_active: KOO
 csc_multi: "KOO/KOO/KOO/KTC"
 google_play_system_update: "2026-09-01"
 security_patch_level: "2023-08-01"
+build_host:
+  type: cloud_linux
+  ram_gb: 64
+  storage_gb_target: 1024
+  preferred_vcpu_count: 16
+  provider: not_selected
+  provisioned: false
 firmware_snapshot_notes:
   - Build number identifies N976NKSU2HXJ2; public firmware catalogs associate this with SM-N976N, Android 12, One UI 4.1, binary 2, built 2025-02-03/04.
-  - Android getprop output confirms bootloader string N976NKSU2HXJ2, baseband N976NKOU2HWH3, active CSC KOO, and Android security patch level 2023-08-01. The AP/build and CP/baseband suffixes differ; this is recorded as an unresolved firmware pairing, not assumed to be an error. Verify against a complete official firmware package before selecting modem/vendor dependencies.
+  - Android properties confirm AP/build N976NKSU2HXJ2, baseband N976NKOU2HWH3, active CSC KOO, and Android security patch level 2023-08-01.
+  - The AP and CP suffixes differ. This is an unresolved firmware pairing, not assumed to be an error. Verify against the complete official firmware package before selecting modem/vendor dependencies.
   - Google Play system update date is not the Android security patch level.
-  - Device identity, bootloader string, security patch level, baseband and active CSC were read from Android properties; Download Mode-only state (including current binary/rollback state and secure download flags) remains unverified.
+  - Bootloader binary 2 is inferred from the AP string; Download Mode rollback state is not independently verified.
+rom_target_notes:
+  - One UI 9 / Android 17 is the selected custom-port target, not an official update for SM-N976N.
+  - A compatible donor firmware build has not yet been selected or pinned.
+  - The installed Android 12 vendor baseline is substantially older than the target; vendor, framework, kernel, and partition compatibility require explicit engineering validation.
 candidate_rom_source:
   repository: Ocin4ever/EternityROM
   branch: fifteen
-  status: research_only
+  status: one_ui_7_reference_only_not_one_ui_9_donor
 candidate_kernel_source:
   repository: ExtremeXT/android_kernel_samsung_exynos9820
   defconfig: extreme_d2xks_defconfig
-  status: research_only
+  status: research_only_not_yet_pinned_or_tested_with_android_17
 flashable_artifacts_available: false
 notes:
   - Candidate sources are not yet adopted or pinned to reproducible commits.
   - No proprietary firmware or vendor payloads belong in this repository.
-  - No flashable artifacts have been built or validated.
+  - No ROM, recovery, or kernel artifact has been built or validated.
