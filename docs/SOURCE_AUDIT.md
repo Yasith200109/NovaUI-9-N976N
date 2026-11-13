@@ -11,6 +11,25 @@
 
 Samsung has announced One UI 9 based on Android 17, but the Note10+ is not shown as an eligible official upgrade in the current public rollout information reviewed for this audit. NovaUI 9 is therefore an independent porting effort, not an official OTA path.
 
+## One UI 9 donor candidate — inspection only
+
+A current Korean One UI 9 firmware candidate has been identified:
+
+| Field | Candidate |
+|---|---|
+| Donor model | Galaxy S26 (Korean), SM-S942N |
+| CSC | KOO |
+| Firmware | `S942NKSS6BZK1` |
+| Android / One UI | Android 17 / One UI 9 |
+| Android security patch | 2026-11-05 |
+| Samsung update record | [Official Samsung firmware changelog](https://doc.samsungmobile.com/SM-S942N/037049260309/kor.html) |
+
+Third-party firmware metadata identifies this donor as Exynos s5e9965 / codename `m1s`, with Android 16 vendor base and a 6.12.69 kernel. Those details must be independently verified against the actual firmware package before use.
+
+**Important:** This is an inspection candidate for Samsung system/framework research only. It is not a compatible N976N firmware package. Do not flash it, and do not reuse its kernel, vendor, modem, boot, dtbo, recovery or partition images on `d2xks`.
+
+The donor's Exynos 2600 platform, Android 16 vendor baseline and 6.12 GKI-era kernel are substantially different from the target's Exynos 9825, Android 12 vendor baseline and 4.14 kernel. The framework port may therefore require significant compatibility work. Donor selection remains provisional until package-level analysis is complete.
+
 ## Candidate source findings
 
 | Component | Candidate | Verified evidence | Decision / remaining work |
@@ -21,20 +40,6 @@ Samsung has announced One UI 9 based on Android 17, but the Note10+ is not shown
 | Recovery/device tree reference | [ExtremeXT/android_device_samsung_exynos9820](https://github.com/ExtremeXT/android_device_samsung_exynos9820) | Exynos 9820/9825 Note10 family recovery reference. | README has an apparent N976B duplication in its model table and a non-N976N build example. Not a verified recovery recipe. |
 | AOSP-family reference | [LineageOS d2x device page](https://wiki.lineageos.org/devices/d2x/) | Lists N976B and N976N within the d2x family. | Does not prove Samsung UX, modem, recovery, or kernel cross-compatibility. |
 | One UI 8.5 lab reference | [Star7-ROM / oneui8.5-lab](https://github.com/samsunggithub/oneui85-lab) | Repository search exposes a d2xks target config and One UI 8.5-oriented UN1CA-derived project structure. | Treat as an independent research lead only. Verify repository provenance, branch, licenses, actual source firmware, build results, and current maintainer status before relying on it. It is not evidence of a One UI 9 build. |
-
-## One UI 9 donor firmware — blocking decision
-
-No donor firmware has yet been selected or pinned. Before implementation, record:
-
-1. Exact donor model and region/CSC.
-2. Full firmware build identifier and Android 17 / One UI 9 confirmation.
-3. Firmware download provenance and terms; keep proprietary firmware private.
-4. AP/PDA, BL, CP, CSC and security patch levels.
-5. Partition map, dynamic/static partition assumptions, filesystem formats, boot/vendor_boot/init_boot/dtbo layout, AVB and encryption expectations.
-6. Donor framework/vendor interface and the compatibility strategy for the N976N's Android 12-era vendor and Exynos 9825 kernel.
-7. Exact d2xks-specific patches and known regressions.
-
-A donor from a newer Snapdragon or different Exynos platform is not automatically usable. Prefer a donor whose framework architecture and hardware platform provide the most realistic compatibility path, and document why it was selected.
 
 ## Device-specific baseline concerns
 
@@ -57,12 +62,13 @@ The installed Android 12 / API 31 vendor baseline is older than Android 17. A su
 
 ## Required next audit tasks
 
-1. Identify candidate official One UI 9 donor builds and choose one only after comparing platform, SoC, vendor and partition compatibility.
-2. Pin immutable commits for the chosen build framework, d2xks config, kernel, recovery reference and tools.
-3. Inspect license/provenance and document modifications before copying upstream code.
-4. Resolve the handset's complete stock firmware pairing and partition contract without writing to the phone.
-5. Produce a source bill of materials and a reproducible, non-flashing build/validation pipeline.
+1. Obtain/inspect the SM-S942N One UI 9 firmware metadata privately and verify all partition, filesystem, boot image, framework and vendor details.
+2. Compare the S26 donor with alternative One UI 9 donor models and write a compatibility rationale before selecting a source.
+3. Pin immutable commits for the chosen build framework, d2xks config, kernel, recovery reference and tools.
+4. Inspect license/provenance and document modifications before copying upstream code.
+5. Resolve the handset's complete stock firmware pairing and partition contract without writing to the phone.
+6. Produce a source bill of materials and a reproducible, non-flashing build/validation pipeline.
 
 ## Current status
 
-**Source audit / port architecture.** No NovaUI ROM image, custom recovery, kernel package, or flashable artifact has been built or validated. No handset flashing is authorized by this audit.
+**One UI 9 donor/source audit in progress.** No donor has been selected, no cloud host has been provisioned, and no NovaUI ROM/recovery/kernel artifact has been built or validated. No flashing is authorized.
